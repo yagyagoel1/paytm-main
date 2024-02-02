@@ -7,7 +7,7 @@ const hashData =async  (data)=>{
     await bcrypt.hash(data,saltRounds,(err,hash)=>{
     if(err)
     {
-        throw error("some unexpected error has occured");
+        throw Error("some unexpected error has occured");
     }
     else{
         return hash;

@@ -1,21 +1,19 @@
 const userModel = require("./model");
 const { hashData} = require("../../util/hashData");
-const userExists = async (username)=>{
-       if(await userModel.findOne(username))
-       {
-        throw error("user already exists");
-       }
 
-}
 const addUser = async ({username,password,firstName,LastName})=>{
-    userExists(username);
+    if(await userModel.findOne({username}))
+       {
+        throw Error("user already exists");
+       }
     const hashedPassword =  await hashData(password);
-    await userModel.create({
+    const createdUser = await userModel.create({
         username : username,
         password : hashedPassword,
         firstName : firstName,
         LastName : LastName
-    });
+    })
+    return createdUser._id;
 }
 
 module.exports = {addUser};
