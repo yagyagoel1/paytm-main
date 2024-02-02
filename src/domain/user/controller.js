@@ -1,5 +1,5 @@
 const userModel = require("./model");
-const { hashData} = require("../../util/hashData");
+const { hashData,verifyData} = require("../../util/hashData");
 
 const addUser = async ({username,password,firstName,LastName})=>{
     if(await userModel.findOne({username}))
@@ -16,4 +16,18 @@ const addUser = async ({username,password,firstName,LastName})=>{
     return createdUser._id;
 }
 
-module.exports = {addUser};
+const verifyUser = async ({
+    username,password
+})=>{
+    const userexists=await userModel.findOne({username});
+    if(!userexists)
+    {
+        throw Error("Invalid username or password");
+    }
+    if(! await verifyData(password,userexists.password))
+    {
+        throw Error("Invalid username or password")
+    };
+}
+
+module.exports = {addUser,verifyUser};

@@ -16,4 +16,15 @@ router.post("/signup",async (req, res) => {
         res.status(400).json({ msg: error.message });
     }
 });
+router.post("/signin",async (req,res)=>{
+    try {
+        const {username,password} = req.body;
+        if(!passwordCheck(password).success&&!usernameCheck(username).success)
+        {
+            throw Error("invalid username or password");
+        }
+    } catch (error) {
+        
+    }
+})
 module.exports = router;

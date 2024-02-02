@@ -14,5 +14,8 @@ const hashData =async  (data)=>{
     }
 })};
 
+const verifyData = async(password,hashedPassword)=>{ bcrypt.compare(password,hashedPassword,(err,result)=>{
+    return result;
+})};
 
-module.exports ={hashData};
+module.exports ={hashData,verifyData};
