@@ -31,6 +31,7 @@ const verifyUser = async (
         throw Error("Invalid username or password")
     };
     const token = await createToken({
+        userId : userexists._id,
         firstName: userexists.firstName,
         LastName: userexists.LastName,
         username: userexists.username,
