@@ -5,7 +5,7 @@ const createToken = async (data)=>{try {
     const token = await jwt.sign(data,JWTKEY,{
         expiresIn : JWTEXPIRY
     });
-    return "Bearer"+token;
+    return "Bearer "+token;
 } catch (error) {
     throw Error("unable to sign the token ");
 }}

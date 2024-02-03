@@ -1,20 +1,28 @@
 const jwt = require("jsonwebtoken");
-JWTKEY = process.env;
+const { JWTKEY } = process.env;
 
 const authMiddleware = async (req, res, next) => {
-    const { Authorization } = req.header;
-    if (!Authorization || Authorization.startswith("Bearer")) {
-        throw Error("invalid token");
-    }
-
-    const token = Authorization.split(' ')[1];
     try {
-        const decoded = await jwt.verify(token, JWTKEY);
-        req.userId = decoded.userId;
-        next();
-    } catch (error) {
+        const { authorization } = req.headers;
 
-        res.status(403).json({ msg: error.message });
+        if (!authorization || !authorization.startsWith("Bearer")) {
+            throw Error("invalid token");
+        }
+
+        const token = authorization.split(' ')[1];
+        try {
+
+            const decoded = await jwt.verify(token, JWTKEY);
+
+            req.userId = decoded.userId;
+            next();
+        } catch (error) {
+
+            res.status(403).json({ msg: error.message });
+        }
+    }
+    catch (error) {
+        res.status(411).json({ msg: error.message })
     }
 }
 module.exports = authMiddleware;

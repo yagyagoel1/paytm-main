@@ -31,7 +31,7 @@ const verifyUser = async (
         throw Error("Invalid username or password")
     };
     const token = await createToken({
-        userId : userexists._id,
+        userId: userexists._id,
         firstName: userexists.firstName,
         LastName: userexists.LastName,
         username: userexists.username,
@@ -40,5 +40,22 @@ const verifyUser = async (
     await userModel.updateOne({ username }, { token: token });
     return token;
 }
+const updateUser = async (data, userId) => {
+    const updatedUser = await userModel.updateOne({ _id: userId },
+        { $set: data });
+    if (!updatedUser) {
+        throw Error("error while updating the information");
+    }
+}
+const findUser = async (filter) => {
+    const users = await userModel.find({
+        $or: [{
+            lastName:
+                { $regex: `^${filter}` }, lastName:
+                { $regex: `^${filter}` }
+        }]
+    }).select('username firstName lastName _id');
+    return users;
 
-module.exports = { addUser, verifyUser };
+}
+module.exports = { addUser, verifyUser, updateUser, findUser };
