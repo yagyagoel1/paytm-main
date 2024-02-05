@@ -57,8 +57,8 @@ const updateUser = async (data, userId) => {
 const findUser = async (filter) => {
     const users = await userModel.find({
         $or: [{
-            lastName:
-                { $regex: `^${filter}` }, lastName:
+            firstName:
+                { $regex: `^${filter}` }},{ lastName:
                 { $regex: `^${filter}` }
         }]
     }).select('username firstName lastName _id');
