@@ -17,6 +17,7 @@ router.get("/balance",  async (req, res, next) => {
 router.post("/transfer", async (req,res,next)=>{
     try {
         const {to,amount} = req.body;
+        
         await transferFunds(req.userId,to,amount);
         res.status(200).json({msg : "Transfer successful"});
     } catch (error) {

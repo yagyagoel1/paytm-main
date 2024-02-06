@@ -3,7 +3,7 @@ const accountModel = require("./model")
 
 
 const fetchBalance = async (userId) => {
-    const balance = await accountModel.findOne({ userId }).select('balance');
+    const {balance} = await accountModel.findOne({ userId });
     if (!balance) {
         throw Error("some error occured while fetching the balance");
     }
