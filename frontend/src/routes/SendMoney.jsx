@@ -1,11 +1,19 @@
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 
-const SendMoney = ({headers}) => {
+const SendMoney = () => {
     const [searchParams]= useSearchParams();
     const name = searchParams.get("name");
     const id = searchParams.get("id");
     let amount=0;
+    const token = localStorage.getItem("authorization")
+    let headers ={};
+    if(token)
+    {
+        headers = {
+            authorization : token
+        }
+    }
     return <div className="flex justify-center h-screen bg-gray-100">
         <div className="h-full flex flex-col justify-center">
             <div
