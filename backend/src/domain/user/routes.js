@@ -11,7 +11,7 @@ router.post("/signup", async (req, res) => {
             throw Error("invalid input");
         }
         const userid = await addUser(username, password, firstName, lastName);
-        res.status(200).json({ userId: userid });
+        res.status(200).json({ msg : "successful signup"});
     }
     catch (error) {
         res.status(400).json({ msg: error.message });
@@ -47,9 +47,10 @@ router.put("/", authMiddleware, async (req, res) => {
 })
 router.get("/bulk", authMiddleware, async (req, res, next) => {
     try {
-        const filter = req.params.filter || "";
+        const filter = req.query.filter;
+        
         const users = await findUser(filter);
-        console.log(users);
+        console.log(users)
         res.status(200).json({
             users: users.map(user => {
                 return {

@@ -4,7 +4,8 @@ const createToken = require("../../util/createToken");
 const accountModel = require("../accounts/model");
 
 const addUser = async (username, password, firstName, lastName) => {
-    if (await userModel.findOne({ username })) {
+    const userexists = await userModel.findOne({ username })
+    if (userexists) {
         throw Error("user already exists");
     }
     const hashedPassword = await hashData(password);
