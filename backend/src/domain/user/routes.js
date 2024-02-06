@@ -50,7 +50,7 @@ router.get("/bulk", authMiddleware, async (req, res, next) => {
         const filter = req.query.filter;
         
         const users = await findUser(filter);
-        console.log(users)
+        
         res.status(200).json({
             users: users.map(user => {
                 return {
